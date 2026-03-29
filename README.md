@@ -14,7 +14,7 @@ Improving design standards for humans simultaneously makes computer use agents m
 
 ```bash
 git clone https://github.com/yourusername/orillia.git
-cd orillia
+cd orillia/mcp
 uv sync
 ```
 
@@ -25,10 +25,12 @@ export NOVA_ACT_API_KEY=your-key-here
 
 ## Setup by Client
 
+In all examples below, replace `/path/to/orillia` with the absolute path to where you cloned this repo.
+
 ### Claude Code
 
 ```bash
-claude mcp add orillia -- uv run --directory /path/to/orillia fastmcp run src/orillia/server.py
+claude mcp add orillia -- uv run --directory /path/to/orillia/mcp fastmcp run src/orillia/server.py
 ```
 
 ### Cursor
@@ -40,7 +42,7 @@ Add to `.cursor/mcp.json`:
   "mcpServers": {
     "orillia": {
       "command": "uv",
-      "args": ["run", "--directory", "/path/to/orillia", "fastmcp", "run", "src/orillia/server.py"]
+      "args": ["run", "--directory", "/path/to/orillia/mcp", "fastmcp", "run", "src/orillia/server.py"]
     }
   }
 }
@@ -55,7 +57,7 @@ Add to your Claude Desktop config (`~/Library/Application Support/Claude/claude_
   "mcpServers": {
     "orillia": {
       "command": "uv",
-      "args": ["run", "--directory", "/path/to/orillia", "fastmcp", "run", "src/orillia/server.py"]
+      "args": ["run", "--directory", "/path/to/orillia/mcp", "fastmcp", "run", "src/orillia/server.py"]
     }
   }
 }
@@ -70,7 +72,22 @@ Add to `~/.codeium/windsurf/mcp_config.json`:
   "mcpServers": {
     "orillia": {
       "command": "uv",
-      "args": ["run", "--directory", "/path/to/orillia", "fastmcp", "run", "src/orillia/server.py"]
+      "args": ["run", "--directory", "/path/to/orillia/mcp", "fastmcp", "run", "src/orillia/server.py"]
+    }
+  }
+}
+```
+
+### Kiro
+
+Add to `.kiro/settings/mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "orillia": {
+      "command": "uv",
+      "args": ["run", "--directory", "/path/to/orillia/mcp", "fastmcp", "run", "src/orillia/server.py"]
     }
   }
 }
@@ -83,7 +100,7 @@ ChatGPT does not support MCP servers.
 ### Run Standalone
 
 ```bash
-# stdio transport
+cd mcp
 uv run fastmcp run src/orillia/server.py
 ```
 
@@ -99,7 +116,7 @@ uv run fastmcp run src/orillia/server.py
 
 ## Demo
 
-The package includes a deliberately flawed 4-page demo site (`src/orillia/demo/flawed_site/`) with holistic UX problems:
+The package includes a deliberately flawed 4-page demo site (`mcp/src/orillia/demo/flawed_site/`) with holistic UX problems:
 
 - **index.html**: Competing CTAs, vague value prop, terminology inconsistencies
 - **pricing.html**: "Most Popular" on the most expensive plan, non-functional toggle, dead-end CTA
