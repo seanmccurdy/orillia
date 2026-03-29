@@ -10,27 +10,81 @@ Improving design standards for humans simultaneously makes computer use agents m
 
 **This tool evaluates and critiques only — it never fixes.** It returns detailed findings and actionable instructions. The calling agent decides what to do.
 
-## Quick Start
+## Install
 
 ```bash
-# Install
+git clone https://github.com/yourusername/orillia.git
+cd orillia
 uv sync
-
-# Run as MCP server (stdio transport)
-fastmcp run src/orillia/server.py
-
-# Or use with Claude Code — add to your MCP config:
-# {
-#   "orillia": {
-#     "command": "uv",
-#     "args": ["run", "--directory", "/path/to/orillia", "fastmcp", "run", "src/orillia/server.py"]
-#   }
-# }
 ```
 
 Set your Nova Act API key:
 ```bash
 export NOVA_ACT_API_KEY=your-key-here
+```
+
+## Setup by Client
+
+### Claude Code
+
+```bash
+claude mcp add orillia -- uv run --directory /path/to/orillia fastmcp run src/orillia/server.py
+```
+
+### Cursor
+
+Add to `.cursor/mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "orillia": {
+      "command": "uv",
+      "args": ["run", "--directory", "/path/to/orillia", "fastmcp", "run", "src/orillia/server.py"]
+    }
+  }
+}
+```
+
+### Claude Desktop
+
+Add to your Claude Desktop config (`~/Library/Application Support/Claude/claude_desktop_config.json` on macOS, `%APPDATA%\Claude\claude_desktop_config.json` on Windows):
+
+```json
+{
+  "mcpServers": {
+    "orillia": {
+      "command": "uv",
+      "args": ["run", "--directory", "/path/to/orillia", "fastmcp", "run", "src/orillia/server.py"]
+    }
+  }
+}
+```
+
+### Windsurf
+
+Add to `~/.codeium/windsurf/mcp_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "orillia": {
+      "command": "uv",
+      "args": ["run", "--directory", "/path/to/orillia", "fastmcp", "run", "src/orillia/server.py"]
+    }
+  }
+}
+```
+
+### ChatGPT
+
+ChatGPT does not support MCP servers.
+
+### Run Standalone
+
+```bash
+# stdio transport
+uv run fastmcp run src/orillia/server.py
 ```
 
 ## Tools
