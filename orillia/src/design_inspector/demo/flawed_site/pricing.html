@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing - FlowBase</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #333; }
+
+        /* Nav - subtly different from index.html */
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 16px 40px; background: #fff; border-bottom: 1px solid #eee;
+        }
+        .logo { font-size: 22px; font-weight: 700; color: #6c5ce7; text-decoration: none; }
+        .nav-links { display: flex; gap: 32px; }
+        .nav-links a { text-decoration: none; color: #555; font-size: 15px; }
+        /* Intentional: nav link order differs from index.html */
+
+        /* Pricing header */
+        .pricing-header {
+            text-align: center; padding: 60px 40px 40px;
+        }
+        .pricing-header h1 { font-size: 40px; margin-bottom: 12px; }
+        .pricing-header p { color: #666; font-size: 18px; }
+
+        /* Toggle - looks interactive but does nothing meaningful */
+        .billing-toggle {
+            display: flex; justify-content: center; gap: 12px; align-items: center;
+            margin: 24px 0 48px; font-size: 15px;
+        }
+        .toggle-switch {
+            width: 48px; height: 26px; background: #dfe6e9; border-radius: 13px;
+            position: relative; cursor: pointer;
+        }
+        .toggle-switch::after {
+            content: ''; width: 22px; height: 22px; background: white;
+            border-radius: 50%; position: absolute; top: 2px; left: 2px;
+            transition: left 0.2s;
+        }
+
+        /* Pricing cards */
+        .pricing-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+            max-width: 1100px; margin: 0 auto; padding: 0 40px 80px;
+        }
+        .pricing-card {
+            border: 2px solid #eee; border-radius: 16px; padding: 40px 32px;
+            text-align: center; position: relative;
+        }
+        /* Intentional: "Popular" badge on the most expensive plan, not the mid-tier */
+        .pricing-card.featured {
+            border-color: #6c5ce7; transform: scale(1.03);
+        }
+        .popular-badge {
+            position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+            background: #6c5ce7; color: white; padding: 4px 20px; border-radius: 20px;
+            font-size: 13px; font-weight: 600;
+        }
+        .plan-name { font-size: 22px; font-weight: 600; margin-bottom: 8px; }
+        .plan-price { font-size: 48px; font-weight: 700; margin-bottom: 4px; }
+        .plan-price span { font-size: 16px; color: #999; font-weight: 400; }
+        .plan-desc { color: #888; font-size: 14px; margin-bottom: 24px; }
+
+        .feature-list { list-style: none; text-align: left; margin-bottom: 32px; }
+        .feature-list li {
+            padding: 8px 0; border-bottom: 1px solid #f5f5f5;
+            font-size: 14px; color: #555;
+        }
+        .feature-list li::before { content: '✓ '; color: #00b894; font-weight: 700; }
+        /* Intentional: some features use jargon without explanation */
+
+        .plan-cta {
+            display: block; padding: 14px; border-radius: 8px; text-decoration: none;
+            font-weight: 600; font-size: 15px;
+        }
+        .plan-cta-primary { background: #6c5ce7; color: white; }
+        .plan-cta-outline { border: 2px solid #6c5ce7; color: #6c5ce7; background: transparent; }
+        /* Intentional: Enterprise CTA is "Contact Sales" — dead end for self-serve users */
+        .plan-cta-ghost { background: #f8f9fa; color: #333; }
+
+        /* Comparison table - intentionally confusing */
+        .comparison {
+            max-width: 1100px; margin: 0 auto; padding: 40px;
+        }
+        .comparison h2 { text-align: center; font-size: 28px; margin-bottom: 32px; }
+        .comparison table { width: 100%; border-collapse: collapse; }
+        .comparison th, .comparison td {
+            padding: 12px 16px; text-align: center; border-bottom: 1px solid #eee;
+            font-size: 14px;
+        }
+        .comparison th { font-weight: 600; background: #f8f9fa; }
+        /* Intentional: some cells use "✓", others use "Yes", others use "Included" */
+
+        /* FAQ - not linked from anywhere else on the page */
+        .faq { padding: 60px 40px; max-width: 800px; margin: 0 auto; }
+        .faq h2 { font-size: 28px; margin-bottom: 32px; text-align: center; }
+        .faq-item { margin-bottom: 16px; border: 1px solid #eee; border-radius: 8px; padding: 16px 20px; }
+        .faq-item h3 { font-size: 15px; font-weight: 600; cursor: pointer; }
+        /* Intentional: FAQ answers are visible with no collapse/expand behavior */
+        .faq-item p { margin-top: 8px; color: #666; font-size: 14px; line-height: 1.6; }
+
+        footer {
+            padding: 40px; background: #f1f2f6; text-align: center; color: #999; font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo">FlowBase</a>
+        <div class="nav-links">
+            <!-- Intentional: different link order and labels than index.html -->
+            <a href="index.html">Product</a>
+            <!-- Index nav says "Home", this says "Product" -->
+            <a href="pricing.html">Pricing</a>
+            <!-- Index nav says "Plans", this says "Pricing" -->
+            <a href="signup.html">Sign Up</a>
+            <!-- Index nav says "Get Started", this says "Sign Up" -->
+            <a href="#">Docs</a>
+            <!-- Index nav says "Resources", this says "Docs" -->
+        </div>
+    </nav>
+
+    <section class="pricing-header">
+        <h1>Simple, Transparent Pricing</h1>
+        <p>Choose the plan that's right for your team</p>
+    </section>
+
+    <!-- Intentional: toggle looks interactive but is purely cosmetic -->
+    <div class="billing-toggle">
+        <span>Monthly</span>
+        <div class="toggle-switch"></div>
+        <span>Annual <strong>(Save 20%)</strong></span>
+    </div>
+
+    <div class="pricing-grid">
+        <div class="pricing-card">
+            <div class="plan-name">Starter</div>
+            <div class="plan-price">$0<span>/mo</span></div>
+            <div class="plan-desc">For individuals getting started</div>
+            <ul class="feature-list">
+                <li>Up to 3 projects</li>
+                <li>Basic analytics</li>
+                <li>1 GB storage</li>
+                <li>Community support</li>
+            </ul>
+            <a href="signup.html" class="plan-cta plan-cta-outline">Get Started</a>
+        </div>
+
+        <div class="pricing-card">
+            <div class="plan-name">Professional</div>
+            <div class="plan-price">$29<span>/mo</span></div>
+            <div class="plan-desc">For growing teams</div>
+            <ul class="feature-list">
+                <li>Unlimited projects</li>
+                <li>Advanced analytics</li>
+                <li>50 GB storage</li>
+                <li>Priority support</li>
+                <li>SSO & SAML</li>
+                <!-- Intentional: jargon without explanation -->
+                <li>Webhook integrations</li>
+            </ul>
+            <a href="signup.html" class="plan-cta plan-cta-outline">Start Free Trial</a>
+        </div>
+
+        <!-- Intentional: "Most Popular" badge on the most expensive plan -->
+        <div class="pricing-card featured">
+            <div class="popular-badge">Most Popular</div>
+            <div class="plan-name">Enterprise</div>
+            <div class="plan-price">Custom</div>
+            <div class="plan-desc">For large organizations</div>
+            <ul class="feature-list">
+                <li>Everything in Professional</li>
+                <li>Unlimited storage</li>
+                <li>Dedicated CSM</li>
+                <!-- Intentional: unexplained acronym -->
+                <li>Custom SLA</li>
+                <li>On-premise deployment</li>
+                <li>HIPAA & SOC2 compliance</li>
+            </ul>
+            <!-- Intentional: dead-end CTA — no contact form, no mailto, just # -->
+            <a href="#" class="plan-cta plan-cta-primary">Contact Sales</a>
+        </div>
+    </div>
+
+    <section class="comparison">
+        <h2>Compare Plans</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Feature</th>
+                    <th>Starter</th>
+                    <th>Professional</th>
+                    <th>Enterprise</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Intentional: inconsistent indicators — ✓, Yes, Included, numbers -->
+                <tr><td>Projects</td><td>3</td><td>Unlimited</td><td>Unlimited</td></tr>
+                <tr><td>Team members</td><td>1</td><td>Up to 25</td><td>No limit</td></tr>
+                <tr><td>Storage</td><td>1 GB</td><td>50 GB</td><td>Unlimited</td></tr>
+                <tr><td>Analytics</td><td>Basic</td><td>Advanced</td><td>Custom</td></tr>
+                <tr><td>API access</td><td>—</td><td>Yes</td><td>Included</td></tr>
+                <tr><td>SSO</td><td>—</td><td>✓</td><td>✓</td></tr>
+                <tr><td>Audit logs</td><td>—</td><td>—</td><td>Available</td></tr>
+                <tr><td>Uptime SLA</td><td>—</td><td>99.9%</td><td>99.99%</td></tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section class="faq">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-item">
+            <h3>Can I change plans later?</h3>
+            <p>Yes, you can upgrade or downgrade at any time. Changes take effect at the start of your next billing cycle.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Is there a free trial?</h3>
+            <p>Professional plans include a 14-day free trial. No credit card required.</p>
+        </div>
+        <div class="faq-item">
+            <h3>What payment methods do you accept?</h3>
+            <p>We accept all major credit cards, wire transfers for Enterprise plans, and support billing through AWS Marketplace.</p>
+        </div>
+    </section>
+
+    <footer>
+        <!-- Intentional: minimal footer unlike index.html's rich footer — inconsistency -->
+        <p>&copy; 2026 FlowBase. All rights reserved.</p>
+    </footer>
+</body>
+</html>

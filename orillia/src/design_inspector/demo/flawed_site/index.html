@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlowBase - The Platform for Everything</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #333; }
+
+        /* Nav - will intentionally differ from other pages */
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 16px 40px; background: #fff; border-bottom: 1px solid #eee;
+        }
+        .logo { font-size: 22px; font-weight: 700; color: #6c5ce7; }
+        .nav-links { display: flex; gap: 32px; }
+        .nav-links a { text-decoration: none; color: #555; font-size: 15px; }
+        .nav-links a:hover { color: #6c5ce7; }
+
+        /* Hero - 3 competing CTAs with no visual hierarchy */
+        .hero {
+            text-align: center; padding: 80px 40px;
+            background: linear-gradient(135deg, #f8f9ff 0%, #e8e6ff 100%);
+        }
+        .hero h1 { font-size: 48px; margin-bottom: 16px; }
+        .hero p { font-size: 18px; color: #666; margin-bottom: 40px; max-width: 600px; margin-left: auto; margin-right: auto; }
+
+        /* Deliberately: all 3 CTAs look equally important */
+        .cta-group { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+        .cta-group a {
+            padding: 14px 32px; border-radius: 8px; text-decoration: none;
+            font-size: 16px; font-weight: 600;
+        }
+        .cta-primary { background: #6c5ce7; color: white; }
+        .cta-secondary { background: #00b894; color: white; }
+        .cta-tertiary { background: #fd79a8; color: white; }
+
+        /* Features - uses different terminology than nav */
+        .features { padding: 80px 40px; max-width: 1100px; margin: 0 auto; }
+        .features h2 { text-align: center; font-size: 32px; margin-bottom: 48px; }
+        .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+        .feature-card {
+            padding: 32px; border-radius: 12px; background: #f8f9fa;
+        }
+        .feature-card h3 { font-size: 20px; margin-bottom: 12px; }
+        .feature-card p { color: #666; line-height: 1.6; }
+
+        /* Testimonial - uses vague language */
+        .testimonial {
+            background: #2d3436; color: white; padding: 60px 40px; text-align: center;
+        }
+        .testimonial blockquote { font-size: 22px; font-style: italic; max-width: 700px; margin: 0 auto 16px; }
+        .testimonial cite { color: #b2bec3; }
+
+        /* Footer - has links that don't appear in nav */
+        footer {
+            padding: 40px; background: #f1f2f6; display: flex; justify-content: space-between;
+            flex-wrap: wrap; gap: 24px;
+        }
+        .footer-col h4 { margin-bottom: 12px; font-size: 14px; text-transform: uppercase; color: #999; }
+        .footer-col a { display: block; color: #555; text-decoration: none; margin-bottom: 8px; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">FlowBase</div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="pricing.html">Plans</a>
+            <!-- Intentional: nav says "Plans" but the page is titled "Pricing" -->
+            <a href="signup.html">Get Started</a>
+            <a href="#">Resources</a>
+            <!-- Intentional: "Resources" goes nowhere -->
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1>The Platform for Everything</h1>
+        <!-- Intentional: tagline is meaninglessly vague -->
+        <p>FlowBase helps teams do more with less. Streamline your workflow, boost productivity, and unlock your potential with our cutting-edge solution.</p>
+        <!-- Intentional: 3 CTAs with equal visual weight, unclear which is primary -->
+        <div class="cta-group">
+            <a href="signup.html" class="cta-primary">Start Free Trial</a>
+            <a href="pricing.html" class="cta-secondary">View Pricing</a>
+            <a href="#" class="cta-tertiary">Watch Demo</a>
+            <!-- Intentional: "Watch Demo" goes nowhere -->
+        </div>
+    </section>
+
+    <section class="features">
+        <!-- Intentional: section says "Solutions" but nav has no "Solutions" link -->
+        <h2>Our Solutions</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h3>Smart Analytics</h3>
+                <p>Get insights that matter with our AI-powered analytics engine. Track everything in real-time.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Team Collaboration</h3>
+                <p>Work together seamlessly with built-in messaging, file sharing, and project management tools.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Enterprise Security</h3>
+                <p>Bank-grade encryption, SSO, and compliance certifications to keep your data safe.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonial">
+        <!-- Intentional: vague testimonial with no company name or role -->
+        <blockquote>"FlowBase completely transformed how our team works. We can't imagine going back."</blockquote>
+        <cite>— Sarah M., Happy Customer</cite>
+    </section>
+
+    <footer>
+        <div class="footer-col">
+            <h4>Product</h4>
+            <!-- Intentional: footer uses "Features" but main content uses "Solutions" -->
+            <a href="#">Features</a>
+            <a href="pricing.html">Pricing</a>
+            <!-- Intentional: footer says "Pricing" but nav says "Plans" -->
+            <a href="#">Integrations</a>
+            <a href="#">API</a>
+        </div>
+        <div class="footer-col">
+            <h4>Company</h4>
+            <a href="#">About</a>
+            <a href="#">Blog</a>
+            <a href="#">Careers</a>
+        </div>
+        <div class="footer-col">
+            <h4>Support</h4>
+            <a href="#">Help Center</a>
+            <a href="#">Contact</a>
+            <a href="#">Status</a>
+        </div>
+        <div class="footer-col">
+            <h4>Legal</h4>
+            <a href="#">Privacy</a>
+            <a href="#">Terms</a>
+        </div>
+    </footer>
+</body>
+</html>

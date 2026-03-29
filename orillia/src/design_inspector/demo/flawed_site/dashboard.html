@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - FlowBase</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #333; background: #f5f6fa; }
+
+        /* Intentional: completely different nav structure — sidebar instead of top nav */
+        .app-layout { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
+
+        .sidebar {
+            background: #2d3436; color: white; padding: 24px 0;
+        }
+        .sidebar-logo {
+            padding: 0 20px 24px; font-size: 20px; font-weight: 700;
+            color: #6c5ce7; border-bottom: 1px solid #3d3d3d;
+        }
+        .sidebar-nav { padding: 16px 0; }
+        .sidebar-nav a {
+            display: flex; align-items: center; gap: 12px;
+            padding: 10px 20px; color: #b2bec3; text-decoration: none; font-size: 14px;
+        }
+        .sidebar-nav a:hover, .sidebar-nav a.active { color: white; background: rgba(255,255,255,0.05); }
+        .sidebar-nav a.active { border-left: 3px solid #6c5ce7; }
+        .sidebar-nav .nav-icon { width: 18px; text-align: center; }
+        /* Intentional: sidebar nav uses icons + text but icons are just emoji — inconsistent with marketing site */
+
+        .sidebar-section {
+            padding: 16px 20px 8px; font-size: 11px; text-transform: uppercase;
+            color: #636e72; letter-spacing: 1px;
+        }
+
+        /* Main content */
+        .main { padding: 32px; }
+
+        /* Top bar */
+        .topbar {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 32px;
+        }
+        .topbar h1 { font-size: 26px; }
+        .topbar-actions { display: flex; gap: 12px; }
+        .topbar-actions button {
+            padding: 8px 16px; border-radius: 6px; font-size: 14px; cursor: pointer;
+        }
+        .btn-primary { background: #6c5ce7; color: white; border: none; }
+        .btn-outline { background: white; color: #333; border: 1px solid #ddd; }
+
+        /* Intentional: no onboarding, empty states, or guidance for new users */
+        /* Dashboard dumps you straight into a feature-dense view */
+
+        /* Stats row */
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 32px; }
+        .stat-card {
+            background: white; border-radius: 12px; padding: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        }
+        .stat-card .stat-label { font-size: 13px; color: #999; margin-bottom: 8px; }
+        .stat-card .stat-value { font-size: 28px; font-weight: 700; }
+        .stat-card .stat-change { font-size: 13px; margin-top: 4px; }
+        .stat-change.positive { color: #00b894; }
+        .stat-change.negative { color: #d63031; }
+
+        /* Content area */
+        .content-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 24px; }
+
+        /* Table */
+        .data-table {
+            background: white; border-radius: 12px; padding: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        }
+        .data-table h3 { font-size: 16px; margin-bottom: 16px; }
+        .data-table table { width: 100%; border-collapse: collapse; }
+        .data-table th, .data-table td {
+            padding: 10px 12px; text-align: left; font-size: 13px;
+            border-bottom: 1px solid #f1f2f6;
+        }
+        .data-table th { font-weight: 600; color: #999; text-transform: uppercase; font-size: 11px; }
+        /* Intentional: table shows data with no explanation of what these metrics mean */
+        .status-badge {
+            display: inline-block; padding: 2px 10px; border-radius: 4px; font-size: 12px;
+        }
+        .status-active { background: #e6fff4; color: #00b894; }
+        .status-pending { background: #fff3e0; color: #e17055; }
+        .status-paused { background: #f1f2f6; color: #636e72; }
+
+        /* Activity feed */
+        .activity-feed {
+            background: white; border-radius: 12px; padding: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        }
+        .activity-feed h3 { font-size: 16px; margin-bottom: 16px; }
+        .activity-item {
+            padding: 12px 0; border-bottom: 1px solid #f5f5f5;
+            font-size: 13px; color: #555;
+        }
+        .activity-item .activity-time { color: #999; font-size: 12px; margin-top: 4px; }
+        /* Intentional: activity feed shows events but doesn't link to relevant pages */
+
+        /* Intentional: no breadcrumbs, no "back to marketing site" link */
+        /* Intentional: no help icon, no tour, no "what's new" for new users */
+        /* Intentional: logout buried with no visual prominence -->
+    </style>
+</head>
+<body>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <div class="sidebar-logo">FlowBase</div>
+            <nav class="sidebar-nav">
+                <div class="sidebar-section">Main</div>
+                <!-- Intentional: navigation labels don't match marketing site terminology -->
+                <a href="#" class="active"><span class="nav-icon">📊</span> Overview</a>
+                <!-- Marketing calls it "Analytics", dashboard calls it "Overview" -->
+                <a href="#"><span class="nav-icon">📁</span> Workspaces</a>
+                <!-- Marketing calls it "Projects", dashboard calls it "Workspaces" -->
+                <a href="#"><span class="nav-icon">👥</span> Members</a>
+                <a href="#"><span class="nav-icon">🔗</span> Connectors</a>
+                <!-- Marketing calls it "Integrations", dashboard calls it "Connectors" -->
+
+                <div class="sidebar-section">Settings</div>
+                <a href="#"><span class="nav-icon">⚙️</span> Preferences</a>
+                <a href="#"><span class="nav-icon">🔑</span> API Keys</a>
+                <a href="#"><span class="nav-icon">💳</span> Billing</a>
+
+                <div class="sidebar-section">Account</div>
+                <a href="#"><span class="nav-icon">👤</span> Profile</a>
+                <a href="index.html"><span class="nav-icon">🚪</span> Log Out</a>
+                <!-- Intentional: logout sends you to the marketing homepage with no confirmation -->
+            </nav>
+        </aside>
+
+        <main class="main">
+            <div class="topbar">
+                <h1>Dashboard</h1>
+                <div class="topbar-actions">
+                    <!-- Intentional: "New Project" button but sidebar says "Workspaces" -->
+                    <button class="btn-primary">+ New Project</button>
+                    <button class="btn-outline">Import</button>
+                    <button class="btn-outline">Export</button>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Total Projects</div>
+                    <div class="stat-value">12</div>
+                    <div class="stat-change positive">↑ 3 this month</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Active Users</div>
+                    <div class="stat-value">847</div>
+                    <div class="stat-change positive">↑ 12.5%</div>
+                </div>
+                <div class="stat-card">
+                    <!-- Intentional: metric with no context about what "good" looks like -->
+                    <div class="stat-label">Avg. Response Time</div>
+                    <div class="stat-value">284ms</div>
+                    <div class="stat-change negative">↓ 8.2%</div>
+                    <!-- Intentional: arrow down is red but lower response time is actually good -->
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Error Rate</div>
+                    <div class="stat-value">0.03%</div>
+                    <div class="stat-change positive">↑ 0.01%</div>
+                    <!-- Intentional: arrow up is green but increasing error rate is bad -->
+                </div>
+            </div>
+
+            <div class="content-grid">
+                <div class="data-table">
+                    <h3>Recent Projects</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Status</th>
+                                <th>Members</th>
+                                <th>Last Updated</th>
+                                <th>Health</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Q1 Marketing Campaign</td>
+                                <td><span class="status-badge status-active">Active</span></td>
+                                <td>8</td>
+                                <td>2 hours ago</td>
+                                <td>92%</td>
+                                <!-- Intentional: "Health" percentage with no explanation -->
+                            </tr>
+                            <tr>
+                                <td>Product Redesign v2</td>
+                                <td><span class="status-badge status-active">Active</span></td>
+                                <td>14</td>
+                                <td>5 hours ago</td>
+                                <td>78%</td>
+                            </tr>
+                            <tr>
+                                <td>Infrastructure Migration</td>
+                                <td><span class="status-badge status-pending">At Risk</span></td>
+                                <!-- Intentional: status enum inconsistency — "At Risk" vs "Active" vs "Paused" -->
+                                <td>6</td>
+                                <td>1 day ago</td>
+                                <td>45%</td>
+                            </tr>
+                            <tr>
+                                <td>Customer Onboarding Flow</td>
+                                <td><span class="status-badge status-paused">Paused</span></td>
+                                <td>3</td>
+                                <td>3 days ago</td>
+                                <td>—</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="activity-feed">
+                    <h3>Activity</h3>
+                    <!-- Intentional: activity items reference features/pages that don't exist in the nav -->
+                    <div class="activity-item">
+                        Sarah updated the <strong>automation rules</strong> for Q1 Marketing
+                        <div class="activity-time">2 hours ago</div>
+                    </div>
+                    <div class="activity-item">
+                        Mike commented on <strong>Sprint Review #23</strong>
+                        <div class="activity-time">4 hours ago</div>
+                    </div>
+                    <div class="activity-item">
+                        New deployment triggered for <strong>staging environment</strong>
+                        <div class="activity-time">6 hours ago</div>
+                    </div>
+                    <div class="activity-item">
+                        Alex shared <strong>Performance Report Q4</strong> with the team
+                        <div class="activity-time">1 day ago</div>
+                    </div>
+                    <div class="activity-item">
+                        System: <strong>Usage limit</strong> approaching for Starter plan
+                        <div class="activity-time">2 days ago</div>
+                        <!-- Intentional: usage warning but no link to upgrade or billing -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

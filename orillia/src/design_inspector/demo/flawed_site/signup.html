@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - FlowBase</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #333; }
+
+        /* Nav - yet another variation */
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 16px 40px; background: #fff; border-bottom: 1px solid #eee;
+        }
+        .logo { font-size: 22px; font-weight: 700; color: #6c5ce7; text-decoration: none; }
+        .nav-links { display: flex; gap: 32px; }
+        .nav-links a { text-decoration: none; color: #555; font-size: 15px; }
+
+        /* Signup layout */
+        .signup-container {
+            display: grid; grid-template-columns: 1fr 1fr; min-height: calc(100vh - 65px);
+        }
+
+        /* Left side - form */
+        .signup-form-area {
+            padding: 60px 48px; display: flex; flex-direction: column; justify-content: center;
+        }
+        .signup-form-area h1 { font-size: 32px; margin-bottom: 8px; }
+        .signup-form-area p { color: #666; margin-bottom: 32px; }
+
+        .form-group { margin-bottom: 20px; }
+        .form-group label {
+            display: block; font-size: 14px; font-weight: 500; margin-bottom: 6px;
+        }
+        /* Intentional: no visual indicator of which fields are required */
+        .form-group input, .form-group select {
+            width: 100%; padding: 12px 16px; border: 1px solid #ddd; border-radius: 8px;
+            font-size: 15px;
+        }
+        .form-group input:focus, .form-group select:focus {
+            outline: none; border-color: #6c5ce7;
+        }
+        /* Intentional: password has no requirements shown */
+
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+        /* Intentional: checkbox text is dense legalese */
+        .checkbox-group {
+            display: flex; gap: 8px; align-items: flex-start; margin-bottom: 24px;
+        }
+        .checkbox-group input[type="checkbox"] { margin-top: 4px; }
+        .checkbox-group label { font-size: 12px; color: #888; line-height: 1.4; }
+        .checkbox-group a { color: #6c5ce7; }
+
+        .submit-btn {
+            width: 100%; padding: 14px; background: #6c5ce7; color: white; border: none;
+            border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer;
+        }
+
+        .social-divider {
+            text-align: center; margin: 24px 0; color: #999; font-size: 14px;
+            position: relative;
+        }
+        .social-divider::before, .social-divider::after {
+            content: ''; position: absolute; top: 50%; width: 40%; height: 1px; background: #ddd;
+        }
+        .social-divider::before { left: 0; }
+        .social-divider::after { right: 0; }
+
+        .social-buttons { display: flex; gap: 12px; }
+        .social-btn {
+            flex: 1; padding: 12px; border: 1px solid #ddd; border-radius: 8px;
+            background: white; font-size: 14px; cursor: pointer; text-align: center;
+        }
+
+        .login-link { margin-top: 24px; text-align: center; font-size: 14px; color: #666; }
+        .login-link a { color: #6c5ce7; text-decoration: none; }
+
+        /* Right side - marketing */
+        .signup-marketing {
+            background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+            color: white; padding: 60px 48px;
+            display: flex; flex-direction: column; justify-content: center;
+        }
+        .signup-marketing h2 { font-size: 28px; margin-bottom: 24px; }
+        .signup-marketing .benefit {
+            display: flex; gap: 12px; align-items: flex-start; margin-bottom: 20px;
+        }
+        .signup-marketing .benefit-icon {
+            width: 32px; height: 32px; background: rgba(255,255,255,0.2);
+            border-radius: 8px; display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0; font-size: 16px;
+        }
+        .signup-marketing .benefit p { font-size: 15px; opacity: 0.9; line-height: 1.5; }
+
+        /* Intentional: no indication of what happens after signup */
+        /* Intentional: no mention of the plan being selected */
+        /* Intentional: no progress indicator (step 1 of ?) */
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo">FlowBase</a>
+        <div class="nav-links">
+            <!-- Intentional: signup page strips nav down to just 2 links — disorienting -->
+            <a href="index.html">Home</a>
+            <a href="pricing.html">Pricing</a>
+            <!-- No "Resources"/"Docs" link at all now -->
+        </div>
+    </nav>
+
+    <div class="signup-container">
+        <div class="signup-form-area">
+            <h1>Create your account</h1>
+            <!-- Intentional: no mention of which plan, no context from pricing page -->
+            <p>Join thousands of teams already using FlowBase</p>
+
+            <form>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>First name</label>
+                        <input type="text" placeholder="Jane">
+                    </div>
+                    <div class="form-group">
+                        <label>Last name</label>
+                        <input type="text" placeholder="Doe">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Work email</label>
+                    <!-- Intentional: says "work email" but doesn't explain why personal email won't work -->
+                    <input type="email" placeholder="jane@company.com">
+                </div>
+
+                <div class="form-group">
+                    <label>Password</label>
+                    <!-- Intentional: no password requirements shown -->
+                    <input type="password" placeholder="Create a password">
+                </div>
+
+                <div class="form-group">
+                    <label>Company size</label>
+                    <!-- Intentional: required but no asterisk, unclear why this is needed -->
+                    <select>
+                        <option value="" disabled selected>Select team size</option>
+                        <option>Just me</option>
+                        <option>2-10</option>
+                        <option>11-50</option>
+                        <option>51-200</option>
+                        <option>201-1000</option>
+                        <option>1000+</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>How did you hear about us?</label>
+                    <!-- Intentional: marketing question disguised as required field -->
+                    <select>
+                        <option value="" disabled selected>Select one</option>
+                        <option>Google search</option>
+                        <option>Social media</option>
+                        <option>Friend or colleague</option>
+                        <option>Blog or article</option>
+                        <option>Conference or event</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+
+                <!-- Intentional: dense legalese that nobody reads -->
+                <div class="checkbox-group">
+                    <input type="checkbox" id="terms">
+                    <label for="terms">
+                        By creating an account, you agree to FlowBase's <a href="#">Terms of Service</a>,
+                        <a href="#">Privacy Policy</a>, <a href="#">Acceptable Use Policy</a>, and
+                        <a href="#">Data Processing Agreement</a>. You also consent to receiving
+                        product updates, marketing communications, and partner offers via email.
+                        You can unsubscribe at any time.
+                    </label>
+                </div>
+
+                <!-- Intentional: form has no action — submit does nothing -->
+                <button type="submit" class="submit-btn">Create Account</button>
+            </form>
+
+            <div class="social-divider">or continue with</div>
+
+            <div class="social-buttons">
+                <button class="social-btn">Google</button>
+                <button class="social-btn">GitHub</button>
+                <button class="social-btn">SSO</button>
+                <!-- Intentional: SSO button with no explanation for non-technical users -->
+            </div>
+
+            <div class="login-link">
+                Already have an account? <a href="#">Log in</a>
+                <!-- Intentional: login goes nowhere -->
+            </div>
+        </div>
+
+        <div class="signup-marketing">
+            <h2>Start building today</h2>
+            <div class="benefit">
+                <div class="benefit-icon">🚀</div>
+                <div><p>Get started in minutes with our intuitive onboarding flow</p></div>
+            </div>
+            <div class="benefit">
+                <div class="benefit-icon">🔒</div>
+                <div><p>Enterprise-grade security from day one</p></div>
+            </div>
+            <div class="benefit">
+                <div class="benefit-icon">💬</div>
+                <div><p>24/7 support from our world-class team</p></div>
+            </div>
+            <!-- Intentional: marketing panel promises "onboarding flow" but
+                 there's no actual onboarding after signup -->
+            <!-- Intentional: promises "24/7 support" but Starter plan says "Community support" -->
+        </div>
+    </div>
+</body>
+</html>
