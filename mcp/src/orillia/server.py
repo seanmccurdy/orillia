@@ -9,7 +9,7 @@ mcp = FastMCP(
     instructions=(
         "You are connected to Orillia. Use these tools to evaluate "
         "web design and UX quality from the perspective of both human users and computer use agents. "
-        "These tools critique and diagnose — they never fix. Read the findings and decide what to do. "
+        "These tools critique and diagnose -- they never fix. Read the findings and decide what to do. "
         "Start with full_evaluation for a comprehensive audit, or use individual tools for targeted checks."
     ),
 )
@@ -118,7 +118,7 @@ async def export_training_data(url: str, output_path: str = "./training_data.jso
 
 
 def main():
-    mcp.run()
+    mcp.run(show_banner=False)
 
 
 if __name__ == "__main__":

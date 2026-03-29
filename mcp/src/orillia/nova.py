@@ -26,6 +26,7 @@ async def nova_session(
     kwargs: dict = {
         "starting_page": url,
         "headless": True,
+        "tty": False,
         "screen_width": screen_width,
         "screen_height": screen_height,
     }

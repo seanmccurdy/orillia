@@ -29,7 +29,7 @@ In all examples below, replace `/path/to/orillia` with the absolute path to wher
 ```bash
 claude mcp add orillia \
   -e NOVA_ACT_API_KEY=your-key-here \
-  -- uv run --directory /path/to/orillia/mcp fastmcp run src/orillia/server.py
+  -- uv run --quiet --directory /path/to/orillia/mcp orillia
 ```
 
 ### Cursor
@@ -41,7 +41,7 @@ Add to `.cursor/mcp.json`:
   "mcpServers": {
     "orillia": {
       "command": "uv",
-      "args": ["run", "--directory", "/path/to/orillia/mcp", "fastmcp", "run", "src/orillia/server.py"],
+      "args": ["run", "--quiet", "--directory", "/path/to/orillia/mcp", "orillia"],
       "env": {
         "NOVA_ACT_API_KEY": "your-key-here"
       }
@@ -59,7 +59,7 @@ Add to your Claude Desktop config (`~/Library/Application Support/Claude/claude_
   "mcpServers": {
     "orillia": {
       "command": "uv",
-      "args": ["run", "--directory", "/path/to/orillia/mcp", "fastmcp", "run", "src/orillia/server.py"],
+      "args": ["run", "--quiet", "--directory", "/path/to/orillia/mcp", "orillia"],
       "env": {
         "NOVA_ACT_API_KEY": "your-key-here"
       }
@@ -77,7 +77,7 @@ Add to `~/.codeium/windsurf/mcp_config.json`:
   "mcpServers": {
     "orillia": {
       "command": "uv",
-      "args": ["run", "--directory", "/path/to/orillia/mcp", "fastmcp", "run", "src/orillia/server.py"],
+      "args": ["run", "--quiet", "--directory", "/path/to/orillia/mcp", "orillia"],
       "env": {
         "NOVA_ACT_API_KEY": "your-key-here"
       }
@@ -95,7 +95,7 @@ Add to `.kiro/settings/mcp.json`:
   "mcpServers": {
     "orillia": {
       "command": "uv",
-      "args": ["run", "--directory", "/path/to/orillia/mcp", "fastmcp", "run", "src/orillia/server.py"],
+      "args": ["run", "--quiet", "--directory", "/path/to/orillia/mcp", "orillia"],
       "env": {
         "NOVA_ACT_API_KEY": "your-key-here"
       }
@@ -113,7 +113,7 @@ ChatGPT does not support MCP servers.
 ```bash
 export NOVA_ACT_API_KEY=your-key-here
 cd mcp
-uv run fastmcp run src/orillia/server.py
+uv run --quiet orillia
 ```
 
 ## Tools
