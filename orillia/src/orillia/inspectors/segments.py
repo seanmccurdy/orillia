@@ -1,20 +1,9 @@
 from __future__ import annotations
 
 import asyncio
-import os
 
-from nova_act import SecurityOptions
-from nova_act.asyncio import NovaAct as AsyncNovaAct
-
-from design_inspector.schemas import SegmentEvaluation
-
-
-def _security_options_for(url: str) -> SecurityOptions | None:
-    if url.startswith("file://"):
-        path = url.removeprefix("file://")
-        directory = os.path.dirname(path)
-        return SecurityOptions(allowed_file_open_paths=[f"{directory}/*"])
-    return None
+from orillia.nova import nova_session
+from orillia.schemas import SegmentEvaluation
 
 
 SEGMENT_CONFIGS: dict[str, dict] = {
@@ -94,32 +83,15 @@ SEGMENT_CONFIGS: dict[str, dict] = {
 }
 
 
-async def _evaluate_as_segment(
-    url: str,
-    segment: str,
-    *,
-    output_dir: str,
-) -> SegmentEvaluation:
+async def run_segment_inspection(url: str, *, segment: str = "new_user") -> SegmentEvaluation:
     config = SEGMENT_CONFIGS[segment]
 
-    security = _security_options_for(url)
-    nova_kwargs = {
-        "starting_page": url,
-        "headless": True,
-        "screen_width": config["screen_width"],
-        "screen_height": config["screen_height"],
-    }
-    if security:
-        nova_kwargs["security_options"] = security
-
-    async with AsyncNovaAct(**nova_kwargs) as nova:
-        # Navigate and interact from this segment's perspective
+    async with nova_session(url, screen_width=config["screen_width"], screen_height=config["screen_height"]) as nova:
         await nova.act(
             f"Navigate this website from the perspective described below. "
             f"Explore the site, click links, try interactive elements.\n\n{config['prompt']}"
         )
 
-        # Extract structured evaluation
         result = await nova.act_get(
             f"Based on your navigation of this site as described below, provide your evaluation.\n\n"
             f"{config['prompt']}",
@@ -132,29 +104,14 @@ async def _evaluate_as_segment(
     return evaluation
 
 
-async def run_segment_inspection(
-    url: str,
-    *,
-    segment: str = "new_user",
-    output_dir: str = "/tmp/design-inspector",
-) -> SegmentEvaluation:
-    os.makedirs(output_dir, exist_ok=True)
-    return await _evaluate_as_segment(url, segment, output_dir=output_dir)
-
-
 async def run_parallel_segment_inspections(
     url: str,
     *,
     segments: list[str],
-    output_dir: str = "/tmp/design-inspector",
 ) -> list[SegmentEvaluation]:
-    os.makedirs(output_dir, exist_ok=True)
-
     tasks = [
-        _evaluate_as_segment(url, segment, output_dir=output_dir)
+        run_segment_inspection(url, segment=segment)
         for segment in segments
         if segment in SEGMENT_CONFIGS
     ]
-
-    results = await asyncio.gather(*tasks)
-    return list(results)
+    return list(await asyncio.gather(*tasks))

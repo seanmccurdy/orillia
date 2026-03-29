@@ -1,4 +1,4 @@
-# Nova Act Design Inspector
+# Orillia
 
 An MCP server that uses [Amazon Nova Act](https://github.com/aws/nova-act) to evaluate web design and UX quality from the perspective of both human users and computer use agents.
 
@@ -14,16 +14,16 @@ Improving design standards for humans simultaneously makes computer use agents m
 
 ```bash
 # Install
-pip install -e .
+uv sync
 
 # Run as MCP server (stdio transport)
-fastmcp run src/design_inspector/server.py
+fastmcp run src/orillia/server.py
 
 # Or use with Claude Code — add to your MCP config:
 # {
-#   "design-inspector": {
+#   "orillia": {
 #     "command": "uv",
-#     "args": ["run", "--directory", "/path/to/nova-act-design-inspector", "fastmcp", "run", "src/design_inspector/server.py"]
+#     "args": ["run", "--directory", "/path/to/orillia", "fastmcp", "run", "src/orillia/server.py"]
 #   }
 # }
 ```
@@ -45,7 +45,7 @@ export NOVA_ACT_API_KEY=your-key-here
 
 ## Demo
 
-The package includes a deliberately flawed 4-page demo site (`src/design_inspector/demo/flawed_site/`) with holistic UX problems:
+The package includes a deliberately flawed 4-page demo site (`src/orillia/demo/flawed_site/`) with holistic UX problems:
 
 - **index.html**: Competing CTAs, vague value prop, terminology inconsistencies
 - **pricing.html**: "Most Popular" on the most expensive plan, non-functional toggle, dead-end CTA
@@ -76,7 +76,7 @@ Ask Claude Code: "Evaluate the design of the demo site at file:///path/to/demo/f
 MCP Client (Claude Code, Cursor, etc.)
     │
     ▼
-FastMCP Server (server.py)
+Orillia MCP Server (server.py)
     │
     ├── evaluate_flow ──────► flow.py ──────► Nova Act (navigate pages, evaluate coherence)
     ├── find_tension_points ► tension.py ──► Nova Act (interact with elements, find friction)

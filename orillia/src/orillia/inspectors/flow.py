@@ -1,19 +1,7 @@
 from __future__ import annotations
 
-import os
-
-from nova_act import SecurityOptions
-from nova_act.asyncio import NovaAct as AsyncNovaAct
-
-from design_inspector.schemas import FlowEvaluation, FlowStep
-
-
-def _security_options_for(url: str) -> SecurityOptions | None:
-    if url.startswith("file://"):
-        path = url.removeprefix("file://")
-        directory = os.path.dirname(path)
-        return SecurityOptions(allowed_file_open_paths=[f"{directory}/*"])
-    return None
+from orillia.nova import nova_session
+from orillia.schemas import FlowEvaluation, FlowStep
 
 
 FLOW_STEP_PROMPT = """\
@@ -50,23 +38,10 @@ Consider:
 Be specific and concrete in your critique. Name exact pages, elements, and inconsistencies."""
 
 
-async def run_flow_inspection(
-    url: str,
-    *,
-    max_depth: int = 3,
-    output_dir: str = "/tmp/design-inspector",
-) -> FlowEvaluation:
-    os.makedirs(output_dir, exist_ok=True)
-
-    nova_kwargs: dict = {"starting_page": url, "headless": True}
-    security = _security_options_for(url)
-    if security:
-        nova_kwargs["security_options"] = security
-
+async def run_flow_inspection(url: str, *, max_depth: int = 3) -> FlowEvaluation:
     steps: list[FlowStep] = []
 
-    async with AsyncNovaAct(**nova_kwargs) as nova:
-        # Evaluate the starting page
+    async with nova_session(url) as nova:
         step_result = await nova.act_get(
             FLOW_STEP_PROMPT,
             schema=FlowStep.model_json_schema(),
@@ -77,20 +52,14 @@ async def run_flow_inspection(
         step.navigation_element_used = None
         steps.append(step)
 
-        # Navigate through the site by clicking links
-        for i in range(max_depth - 1):
+        for _ in range(max_depth - 1):
             prev_url = str(nova.page.url)
-
-            # Ask Nova Act to click a navigation link
-            nav_result = await nova.act(NAVIGATE_PROMPT)
-
+            await nova.act(NAVIGATE_PROMPT)
             current_url = str(nova.page.url)
 
-            # If we didn't navigate anywhere, we're done
             if current_url == prev_url:
                 break
 
-            # Evaluate this new page
             step_result = await nova.act_get(
                 FLOW_STEP_PROMPT,
                 schema=FlowStep.model_json_schema(),
@@ -100,7 +69,6 @@ async def run_flow_inspection(
             step.arrived_from = prev_url
             steps.append(step)
 
-        # Final holistic evaluation after having navigated the whole site
         evaluation_result = await nova.act_get(
             FLOW_EVALUATION_PROMPT,
             schema=FlowEvaluation.model_json_schema(),

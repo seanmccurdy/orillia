@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 from datetime import datetime, timezone
 
-from design_inspector.schemas import (
+from orillia.schemas import (
     FlowEvaluation,
     FullReport,
     SegmentEvaluation,
@@ -18,8 +18,6 @@ def assemble_report(
     flow: FlowEvaluation,
     tensions: TensionReport,
     segment_evaluations: list[SegmentEvaluation],
-    screenshot_paths: list[str],
-    output_dir: str,
 ) -> FullReport:
     # Compute overall design health from component scores
     scores = [
@@ -57,7 +55,6 @@ def assemble_report(
         segment_evaluations=segment_evaluations,
         overall_design_health=max(1, min(100, overall)),
         top_priorities=priorities,
-        screenshot_paths=screenshot_paths,
     )
 
 

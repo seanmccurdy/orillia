@@ -1,19 +1,7 @@
 from __future__ import annotations
 
-import os
-
-from nova_act import SecurityOptions
-from nova_act.asyncio import NovaAct as AsyncNovaAct
-
-from design_inspector.schemas import TensionReport
-
-
-def _security_options_for(url: str) -> SecurityOptions | None:
-    if url.startswith("file://"):
-        path = url.removeprefix("file://")
-        directory = os.path.dirname(path)
-        return SecurityOptions(allowed_file_open_paths=[f"{directory}/*"])
-    return None
+from orillia.nova import nova_session
+from orillia.schemas import TensionReport
 
 
 TENSION_PROMPT = """\
@@ -52,26 +40,11 @@ that look like they should do something but don't, or elements that do something
 Important: Stay on this page. If a click navigates you away, note that and come back."""
 
 
-async def run_tension_inspection(
-    url: str,
-    *,
-    output_dir: str = "/tmp/design-inspector",
-) -> TensionReport:
-    os.makedirs(output_dir, exist_ok=True)
-
-    security = _security_options_for(url)
-    nova_kwargs: dict = {"starting_page": url, "headless": True}
-    if security:
-        nova_kwargs["security_options"] = security
-
-    async with AsyncNovaAct(**nova_kwargs) as nova:
-        # Scroll through the full page so Nova Act sees everything
+async def run_tension_inspection(url: str) -> TensionReport:
+    async with nova_session(url) as nova:
         await nova.act("Scroll slowly through the entire page from top to bottom, observing all content and elements")
-
-        # Test interactive elements to discover broken/misleading ones
         await nova.act(INTERACTION_TEST_PROMPT)
 
-        # Extract the structured tension report
         result = await nova.act_get(
             TENSION_PROMPT,
             schema=TensionReport.model_json_schema(),
